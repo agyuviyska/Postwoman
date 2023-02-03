@@ -1,5 +1,11 @@
 package com.example;
 
+import com.example.ConfigProvider;
+import com.example.PaymentRequestMessageProvider;
+import com.example.PaymentTransactionClient;
+import com.example.models.SaleRequest;
+import com.example.models.SaleResponse;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -8,45 +14,62 @@ import java.net.URISyntaxException;
 import static org.junit.Assert.assertEquals;
 
 public class TestPaymentTransactionClient {
-    @Test
-    public void neHello() throws URISyntaxException, IOException, InterruptedException {
+    final String VALID_MESSAGE_FILE_NAME = "ValidSaleMessages.json";
+    private static PaymentTransactionClient paymentClient;
+
+    @BeforeClass
+//    todo da go iznesem v otdelen class i da go izvikvame
+    public static void setup() throws IOException, URISyntaxException {
         //        System.out.print(getClass().getCanonicalName());
         ConfigProvider configProvider = new ConfigProvider();
-
-        var authenticationUser=configProvider.getPropValue("authenticationUser");
-        var authenticationPassword=configProvider.getPropValue("authenticationPassword");
-        var apiPort=configProvider.getPropValue("apiPort");
-        var apiAddress=configProvider.getPropValue("address");
+//todo razlichni testove: bez hedyr za auth, greshen hedyr za auth
+        var authenticationUser = configProvider.getPropValue("authenticationUser");
+        var authenticationPassword = configProvider.getPropValue("authenticationPassword");
+        var apiPort = configProvider.getPropValue("apiPort");
+        var apiAddress = configProvider.getPropValue("address");
 //todo po-govorqshti printove
         System.out.println(authenticationUser);
         System.out.println(authenticationPassword);
         System.out.println(apiPort);
         System.out.println(apiAddress);
-        var message = "" +
-                "{\n                \"payment_transaction\": " +
-                "{\n                                   \"card_number\": \"4200000000000000\",\n                                   \"cvv\": \"123\",\n                                   \"expiration_date\": \"06/2019\",\n                                   \"amount\": \"500\",\n                                   \"usage\": \"Coffeemaker\",\n                                   \"transaction_type\": \"sale\",\n                                   \"card_holder\": \"Panda Panda\",\n                                   \"email\": \"panda@example.com\",\n                                   \"address\": \"Panda Street, China\"\n                                 }\n                }";
+        paymentClient = new PaymentTransactionClient(apiPort, apiAddress, authenticationUser, authenticationPassword);
+    }
 
-        var ptClient = new PaymentTransactionClient(apiPort,apiAddress,authenticationUser,authenticationPassword);
-        var response=ptClient.makePaymentTransactionRequest(message);
+    @Test
+    public void validSaleTransactionStatus() throws IOException, InterruptedException {
+
+        var messageProvider = new PaymentRequestMessageProvider();
+        String message = messageProvider.getMessage(VALID_MESSAGE_FILE_NAME);
+        var response = paymentClient.makePaymentTransactionRequest(message);
         System.out.println(response.statusCode());
-//        var uri = new URI("http://localhost:3001/payment_transactions");
-//        var message="" +
-//                "{\n                \"payment_transaction\": " +
-//                "{\n                                   \"card_number\": \"4200000000000000\",\n                                   \"cvv\": \"123\",\n                                   \"expiration_date\": \"06/2019\",\n                                   \"amount\": \"500\",\n                                   \"usage\": \"Coffeemaker\",\n                                   \"transaction_type\": \"sale\",\n                                   \"card_holder\": \"Panda Panda\",\n                                   \"email\": \"panda@example.com\",\n                                   \"address\": \"Panda Street, China\"\n                                 }\n                }";
-//        ConfigProvider configProvider= new ConfigProvider();
-//        String user = configProvider.getPropValue("autenticationUser");
-//        String pwd = configProvider.getPropValue("autenticationPassword");
-//        String encoding = Base64.getEncoder().encodeToString((user + ":" + pwd).getBytes());
-//        String bscAuth =  "Basic " + encoding;
-//
-//        var client = HttpClient.newHttpClient();
-//        var request = HttpRequest.newBuilder(uri).POST(HttpRequest.BodyPublishers.ofString(message))
-//                .header("Content-type","application/json;charset=UTF-8")
-//                .header("Authorization",bscAuth).build();
-////        HttpRequest.newBuilder().POST().header("Authorization","Basic Y29kZW1vbnN0ZXI6bXk1ZWNyZXQta2V5Mm8ybw==").build();
-//
-//        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
         //todo proveri celiq respons, a ne samo status koda
-        assertEquals(200,response.statusCode());
+        assertEquals(200, response.statusCode());
+    }
+//    @Test
+//    public void invalidSaleTransactionStatus() throws IOException, InterruptedException {
+//
+//        var messageProvider = new PaymentRequestMessageProvider();
+//        String message = messageProvider.getMessage(VALID_MESSAGE_FILE_NAME);
+//        var response = paymentClient.makePaymentTransactionRequest(message);
+//        System.out.println(response.statusCode());
+//
+//        //todo proveri celiq respons, a ne samo status koda
+//        assertEquals(401, response.statusCode());
+//    }
+    @Test
+    public void checkAmountsAreEqual() throws IOException, InterruptedException {
+
+        var messageProvider = new PaymentRequestMessageProvider();
+        String request = messageProvider.getMessage(VALID_MESSAGE_FILE_NAME);
+        var response = paymentClient.makePaymentTransactionRequest(request);
+        System.out.println(response.body().toString());
+        SaleRequest saleRequest;
+        SaleResponse saleResponse;
+        JsonToModelConverter converter = new JsonToModelConverter();
+        saleRequest = converter.getSaleRequestFromJson(request);
+        saleResponse = converter.getSaleResponseFromJson(response.body().toString());
+
+        assertEquals(saleRequest.getAmount(),saleResponse.getAmount());
     }
 }

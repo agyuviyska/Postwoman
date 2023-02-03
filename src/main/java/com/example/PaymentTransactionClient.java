@@ -16,18 +16,9 @@ public class PaymentTransactionClient {
     //todo napravq model s props
     public PaymentTransactionClient(String port, String address, String userName, String userPass) throws URISyntaxException, IOException {
         this.uri = new URI("http://" + address + ":" + port + "/" + PAYMENT_TRANSACTION_METHOD);
-//      var uri = new URI("http://localhost:3001/payment_transactions");
-        var message = "" +
-                "{\n                \"payment_transaction\": " +
-                "{\n                                   \"card_number\": \"4200000000000000\",\n                                   \"cvv\": \"123\",\n                                   \"expiration_date\": \"06/2019\",\n                                   \"amount\": \"500\",\n                                   \"usage\": \"Coffeemaker\",\n                                   \"transaction_type\": \"sale\",\n                                   \"card_holder\": \"Panda Panda\",\n                                   \"email\": \"panda@example.com\",\n                                   \"address\": \"Panda Street, China\"\n                                 }\n                }";
 //      generira basic authentication header-a
         String encoding = Base64.getEncoder().encodeToString((userName + ":" + userPass).getBytes());
         this.basicAuth = "Basic " + encoding;
-
-//      var client = HttpClient.newHttpClient();
-//      var request = HttpRequest.newBuilder(uri).POST(HttpRequest.BodyPublishers.ofString(message))
-//                .header("Content-type","application/json;charset=UTF-8")
-//                .header("Authorization",basicAuth).build();
     }
 
     public HttpResponse makePaymentTransactionRequest(String message) throws IOException, InterruptedException {
