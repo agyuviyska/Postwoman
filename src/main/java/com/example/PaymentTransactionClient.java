@@ -13,7 +13,6 @@ public class PaymentTransactionClient {
     private String basicAuth;
     final String PAYMENT_TRANSACTION_METHOD = "payment_transactions";
 
-    //todo napravq model s props
     public PaymentTransactionClient(String port, String address, String userName, String userPass) throws URISyntaxException, IOException {
         this.uri = new URI("http://" + address + ":" + port + "/" + PAYMENT_TRANSACTION_METHOD);
 //      generira basic authentication header-a
@@ -29,4 +28,5 @@ public class PaymentTransactionClient {
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response;
     }
+
 }

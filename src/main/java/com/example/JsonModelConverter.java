@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 //todo use generic type <T> instead of multiple methods
-public class JsonToModelConverter {
+public class JsonModelConverter {
 
     public SaleRequest getSaleRequestFromJson (String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -36,6 +36,17 @@ public class JsonToModelConverter {
         VoidResponse voidResponse = mapper.readValue(json,VoidResponse.class);
 
         return voidResponse;
+    }
+    public String getJsonFromVoidRequest(VoidRequest voidRequest) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = new String();
+        try {
+             json = objectMapper.writeValueAsString(voidRequest);
+            System.out.println(json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
 }
