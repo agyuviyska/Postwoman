@@ -11,7 +11,7 @@ public class SetUpPaymentClient {
         var authenticationPassword = configProvider.getPropValue("authenticationPassword");
         var apiPort = configProvider.getPropValue("apiPort");
         var apiAddress = configProvider.getPropValue("address");
-//todo po-govorqshti printove
+//todo better names for sout
         System.out.println(authenticationUser);
         System.out.println(authenticationPassword);
         System.out.println(apiPort);

@@ -18,14 +18,13 @@ public class WrongBasicAuthenticationTransactionStatusCode401Test {
         var authenticationPassword = "fff";
         var apiPort = configProvider.getPropValue("apiPort");
         var apiAddress = configProvider.getPropValue("address");
-//todo po-govorqshti printove
+//todo beter names for sout
         System.out.println(authenticationUser);
         System.out.println(authenticationPassword);
         System.out.println(apiPort);
         System.out.println(apiAddress);
         paymentClient = new PaymentTransactionClient(apiPort, apiAddress, authenticationUser, authenticationPassword);
     }
-
     @Test
     public void wrongBasicAuthenticationTransactionStatusCode401() throws IOException, InterruptedException {
 

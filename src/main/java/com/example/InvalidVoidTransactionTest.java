@@ -10,8 +10,8 @@ import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class InvalidVoidTransactionTest {
+   //todo move all test in indipendent folder test and learn jUnit 5
     static final String VALID_MESSAGE_FILE_NAME = "ValidSaleMessages.json";
     private static PaymentTransactionClient paymentClient;
     private static String voidRequestMessage;

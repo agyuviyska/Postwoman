@@ -18,13 +18,13 @@ public class NonExistentReferenceVoidTransactionTest {
     public static void setUpForValidVoidTransaction() throws IOException, URISyntaxException {
         paymentClient = SetUpPaymentClient.setUpForValidHttpConnection();
         VoidRequest voidRequest = new VoidRequest();
-        voidRequest.setReferenceID("Lamas without Pyjamas");
+        voidRequest.setReferenceID("Lamas without Pajamas");
         voidRequest.setTransactionType("void");
         JsonModelConverter converter = new JsonModelConverter();
         voidRequestMessage = converter.getJsonFromVoidRequest(voidRequest);
     }
     @Test
-    public void validSaleTransactionStatusCode200() throws IOException, InterruptedException {
+    public void nonExistentReferenceVoidTransactionStatusCode422() throws IOException, InterruptedException {
 
         var response = paymentClient.makePaymentTransactionRequest(voidRequestMessage);
         System.out.println(response.statusCode());
@@ -33,5 +33,4 @@ public class NonExistentReferenceVoidTransactionTest {
 
         assertEquals(expectedResult, actualResult);
     }
-
 }
