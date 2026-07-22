@@ -1,19 +1,28 @@
-# Compiled class files
+# Compiled class files & Maven build output
 *.class
+target/
 
 # Log files
 *.log
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
 
-# virtual machine crash logs, see https://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs
 hs_err_pid*
 
-# IntelliJ
+# IntelliJ IDEA settings
 out/
+.idea/
+*.iml
 
-# Maven
-target/
+# Environment variables & local configuration (Security)
+.env
+*.env
+local.properties
+
+# Operating System generated files
+.DS_Store
+Thumbs.db
