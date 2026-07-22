@@ -31,6 +31,6 @@ public class NonExistentReferenceVoidTransactionTest {
         int expectedResult=422;
         int actualResult=response.statusCode();
 
-        assertEquals(expectedResult, actualResult);
+        assertEquals("Test non Existent Reference Void Transaction Status Code 422 failed!",expectedResult, actualResult);
     }
 }

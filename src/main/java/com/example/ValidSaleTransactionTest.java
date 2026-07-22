@@ -41,7 +41,7 @@ public class ValidSaleTransactionTest {
         String expectedResult = "approved";
         String actualResult = saleResponse.getStatus();
 
-        assertEquals(expectedResult,actualResult);
+        assertEquals("Test check Valid Sale Status Approved failed!!!",expectedResult,actualResult);
     }
     @Test
     public void checkAmountsAreEqual() throws IOException, InterruptedException {
@@ -56,7 +56,7 @@ public class ValidSaleTransactionTest {
         saleRequest = converter.getSaleRequestFromJson(request);
         saleResponse = converter.getSaleResponseFromJson(response.body().toString());
 
-        assertEquals(saleRequest.getAmount(),saleResponse.getAmount());
+        assertEquals("Test checkAmountsAreEqual failed!",saleRequest.getAmount(),saleResponse.getAmount());
     }
 
 

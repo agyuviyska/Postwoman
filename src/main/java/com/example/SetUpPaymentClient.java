@@ -12,10 +12,10 @@ public class SetUpPaymentClient {
         var apiPort = configProvider.getPropValue("apiPort");
         var apiAddress = configProvider.getPropValue("address");
 //todo better names for sout
-        System.out.println(authenticationUser);
-        System.out.println(authenticationPassword);
-        System.out.println(apiPort);
-        System.out.println(apiAddress);
+        System.out.println("Authentication User: " + authenticationUser);
+        System.out.println("Authentication Password:" + authenticationPassword);
+        System.out.println("API Port: " + apiPort);
+        System.out.println("Address: " + apiAddress);
         return new PaymentTransactionClient(apiPort, apiAddress, authenticationUser, authenticationPassword);
     }
 }

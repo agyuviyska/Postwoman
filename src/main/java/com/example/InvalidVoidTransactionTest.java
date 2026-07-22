@@ -44,6 +44,6 @@ public class InvalidVoidTransactionTest {
         int expectedResult=422;
         int actualResult=response.statusCode();
 
-        assertEquals(expectedResult, actualResult);
+        assertEquals("Test check Invalid Void Pointing Void Returns 422 failed!",expectedResult, actualResult);
     }
 }

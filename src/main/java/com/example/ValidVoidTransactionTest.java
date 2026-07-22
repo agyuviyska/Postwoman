@@ -36,6 +36,6 @@ public class ValidVoidTransactionTest {
         String expectedResult = "approved";
         String actualResult = voidResponse.getStatus();
 
-        assertEquals(expectedResult,actualResult);
+        assertEquals("Test check Valid Void Status Approved failed!",expectedResult,actualResult);
     }
 }

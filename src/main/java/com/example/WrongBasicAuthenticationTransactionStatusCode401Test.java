@@ -32,7 +32,7 @@ public class WrongBasicAuthenticationTransactionStatusCode401Test {
         String message = messageProvider.getMessage(VALID_MESSAGE_FILE_NAME);
         var response = paymentClient.makePaymentTransactionRequest(message);
         System.out.println(response.statusCode());
-        assertEquals(401, response.statusCode());
+        assertEquals("Test wrong Basic Authentication Transaction Status Code 401 failed!",401, response.statusCode());
     }
 }
 
