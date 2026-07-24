@@ -13,7 +13,7 @@ A Java-based API testing automation project built with Maven and JUnit 4 for ver
 * Language: Java 11+ (uses java.net.http.HttpClient)
 * Testing Framework: JUnit 4
 * Build Tool: Maven
-* JSON Processing: 
+* JSON Processing: Jackson
 
 ---
 
